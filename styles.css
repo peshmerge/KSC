@@ -1,0 +1,28 @@
+#lookupIcon {
+  border-radius: 50%;
+  background-size: contain;
+  z-index: 1000;
+}
+
+#lookupPopup {
+  position: absolute;
+  min-width: 100px;
+  width: auto !important;
+  max-width: 600px !important;
+  font-size: 1.1em !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  background-color: rgb(255, 255, 255);
+  border : 1px solid #ccc;
+  padding : 5px;
+  direction: ltr;
+  border-radius: 7px;
+}
+
+.option_title{
+  display: block;
+  margin: 1px;
+  padding: 5px;
+  background-color: coral;
+  border-radius: 7px;
+}

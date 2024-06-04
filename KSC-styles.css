@@ -1,0 +1,9 @@
+#phonemeType {
+  display: inline-block !important;
+  vertical-align: middle !important; /* Align them vertically in the middle */
+}
+label {
+  display: inline-block !important;
+  vertical-align: middle !important; /* Align them vertically in the middle */
+  margin-right: 10px; /* Add space between label and select */
+}
