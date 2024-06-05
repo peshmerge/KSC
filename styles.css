@@ -6,23 +6,35 @@
 
 #lookupPopup {
   position: absolute;
-  min-width: 100px;
+  min-width: 450px !important;
   width: auto !important;
   max-width: 600px !important;
   font-size: 1.1em !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   background-color: rgb(255, 255, 255);
-  border : 1px solid #ccc;
-  padding : 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
   direction: ltr;
   border-radius: 7px;
 }
 
-.option_title{
+.option_title {
   display: block;
   margin: 1px;
   padding: 5px;
   background-color: coral;
   border-radius: 7px;
+}
+
+
+#transliterated_text_div {
+  user-select: none !important;
+  /* Standard syntax */
+  -moz-user-select: none !important;
+  /* For Firefox */
+  -webkit-user-select: none !important;
+  /* For Safari */
+  -ms-user-select: none !important;
+  /* For Internet Explorer and Edge */
 }
