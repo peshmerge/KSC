@@ -1,10 +1,4 @@
-#lookupIcon {
-  border-radius: 50%;
-  background-size: contain;
-  z-index: 1000;
-}
-
-#lookupPopup {
+#transliteration-popup {
   position: absolute;
   min-width: 450px !important;
   width: auto !important;
@@ -19,22 +13,6 @@
   border-radius: 7px;
 }
 
-.option_title {
-  display: block;
-  margin: 1px;
-  padding: 5px;
-  background-color: coral;
-  border-radius: 7px;
-}
-
-
 #transliterated_text_div {
   user-select: none !important;
-  /* Standard syntax */
-  -moz-user-select: none !important;
-  /* For Firefox */
-  -webkit-user-select: none !important;
-  /* For Safari */
-  -ms-user-select: none !important;
-  /* For Internet Explorer and Edge */
 }
