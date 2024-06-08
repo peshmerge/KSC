@@ -25,7 +25,7 @@ A better solution would be checking the html language code reference attribute
  However, not all Kurdish websites are using this attribute correctly.
 */
 const kurdishPersianArabicAlphabet = [
-  'ا', 'پ', 'چ', 'ژ', 'ک', 'گ', 'ل', 'ێ', 'ە', 'ڵ', 'ئـ', 'وو', 'ڕ', '	ۆ'
+  'پ', 'چ', 'ژ', 'ک', 'گ', 'ێ', 'ڵ', 'ئـ', 'ڕ', '	ۆ'
 ];
 
 const kurdishLatinAlphabet = [
@@ -101,7 +101,10 @@ document.addEventListener('click', function (event) {
   }
 });
 
-
+/*
+  As the name suggest, in this function, a popup is shown and the text is being
+  examined to detect the script type, then the transliterate function is called.
+*/
 function showPopup(rect, highlighted_text) {
   //Remove any other before adding a new one.
   removeElementByID('transliteration-popup');
@@ -112,31 +115,35 @@ function showPopup(rect, highlighted_text) {
 
   // Check what script are we dealing with, Central Kurdish or Northern Kurdish
   let script_type = detectScript(highlighted_text);
-  // Based on the detected script, show the options related to the specific script. 
+  // Show the options related to the specific script. 
   if (script_type === "PAS") {
     popup_element.style.direction = "ltr";
     popup_element.style.textAlign = "left";
+
+    // Convert the highlighted text based on the detected script
+    transliterated_text = transliterate(
+      highlighted_text,
+      script_type,
+      "reduced"
+    );
     popup_element.appendChild(addPASRadioOptions(highlighted_text, script_type));
   } else if (script_type === "LAS") {
+    // Transliterated text will appear using Persian-Arabic script, therefore rtl.
     popup_element.style.direction = "rtl";
     popup_element.style.textAlign = "right";
     popup_element.appendChild(addLASRadioOptions(highlighted_text, script_type));
+    // Convert the highlighted text based on the detected script
+    transliterated_text = transliterate(highlighted_text,
+      script_type,
+      "diacritical"
+    );
   } else {
     return;
   }
-  // Convert the highlighted text based on the detected script
-  transliterated_text = transliterate(
-    highlighted_text,
-    script_type,
-    "diacritical"
-  );
 
   // Add a div to contain the transliterated text 
   let transliteration_text_div = document.createElement('div');
   transliteration_text_div.id = "transliterated_text_div";
-
-  transliteration_text_div.style.pointerEvents = "none";
-
 
   // Add a P element make it contain the  transliterated text 
   let tratransliterated_text_element = document.createElement('p');
@@ -154,7 +161,13 @@ function showPopup(rect, highlighted_text) {
   popup_element.style.left = `${rect.left + window.scrollX}px`;
   popup_element.style.top = `${rect.top + window.scrollY + rect.height + 10}px`;
 
+  // To avoid the disappearance of the popup when clicking on it.
   popup_element.addEventListener("click", function (event) {
+    popupCount = 1;
+  });
+
+  // The transliterated text must be copied when user clicks on the div.
+  transliteration_text_div.addEventListener("click", function (event) {
     popupCount = 1;
     navigator.clipboard.writeText(
       tratransliterated_text_element.innerText
@@ -166,6 +179,7 @@ function showPopup(rect, highlighted_text) {
 
   });
 
+  // Disable selecting transliterated text to be transliterated again :D 
   popup_element.addEventListener("selectionchange", function (event) {
     popupCount = 1;
     event.preventDefault();
@@ -183,7 +197,7 @@ function addPASRadioOptions(highlighted_text, script_type) {
   const container = document.createElement('div');
   container.id = "PAS-options-container";
   setting_element = document.createElement('span');
-  setting_element.innerHTML = "<b>Guhartina tîpên (ڕ,ڵ,ح,غ): </b>";
+  setting_element.innerHTML = "<b>Guhartina tîpên (ڕ,ڵ,ح,غ) bi: </b>";
   container.appendChild(setting_element);
   const options_list = ["diacritical", "digraph", "reduced"];
   const options_label = ["(ř ɫ ḧ ẍ)", "(rr ll hh gh)", "(r l h x)"]
@@ -194,7 +208,7 @@ function addPASRadioOptions(highlighted_text, script_type) {
     radioButton.id = `PAS-${option}`;  // Generate a unique ID
     radioButton.name = "PAS-options";
     radioButton.value = option;
-    if (option === 'diacritical') {
+    if (option === 'reduced') {
       radioButton.checked = true;
     }
     radioButton.addEventListener('click', function () {
@@ -292,7 +306,7 @@ function detectScript(highlighted_text) {
 }
 
 // The actual transliterate function that uses functions from Kurdinus.js
-function transliterate(highlighted_text, script_type, option = "diacritical") {
+function transliterate(highlighted_text, script_type, option) {
   if (script_type === "PAS") {
     // Persian-Arabic to Latin
     output = TransliterateAr2La(highlighted_text, option);
