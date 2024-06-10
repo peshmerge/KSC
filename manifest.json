@@ -3,10 +3,6 @@
   "name": "KSC - Kurdish Scripts Converter",
   "version": "1.0",
   "description": "A Chrome extension to convert between Kurdish scripts, from Persian-Arabic script to Latin (Hawar) script and vice versa!",
-  "permissions": [
-    "activeTab",
-    "scripting"
-  ],
   "content_scripts": [
     {
       "matches": [
@@ -16,6 +12,7 @@
         "content.js",
         "kurdinus.js"
       ],
+      "run_at": "document_end",
       "css": [
         "styles.css"
       ]

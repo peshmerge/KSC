@@ -150,6 +150,7 @@ function showPopup(rect, highlighted_text) {
   // Add a P element make it contain the  transliterated text 
   let tratransliterated_text_element = document.createElement('p');
   tratransliterated_text_element.id = "transliterated_element";
+  tratransliterated_text_element.style.fontFamily = "Roboto,Arial,sans-serif";
   tratransliterated_text_element.innerHTML = transliterated_text;
 
   // Append the P element to the container div transliteration_text_div
@@ -210,10 +211,12 @@ function addPASRadioOptions(highlighted_text, script_type) {
     radioButton.id = `PAS-${option}`;  // Generate a unique ID
     radioButton.name = "PAS-options";
     radioButton.value = option;
+    radioButton.style.margin = '5px';
     if (option === 'reduced') {
       radioButton.checked = true;
     }
     radioButton.addEventListener('click', function () {
+      radioButton.style.backgroundColor = "#f35429";
       transliterated_text = transliterate(highlighted_text, script_type, option);
       (
         document.getElementById("transliterated_element")
@@ -249,12 +252,13 @@ function addLASRadioOptions(highlighted_text, script_type) {
     radioButton.id = `LAS-${option}`;  // Generate a unique ID
     radioButton.name = "LAS-options";
     radioButton.value = option;
+    radioButton.style.margin = '5px';
     if (option === 'diacritical') {
       radioButton.checked = true;
     }
     radioButton.addEventListener('click', function () {
-      transliterated_text = transliterate(
-        highlighted_text, script_type, option);
+      radioButton.style.backgroundColor = "#f35429";
+      transliterated_text = transliterate(highlighted_text, script_type, option);
       (
         document.getElementById(
           "transliterated_element"
