@@ -45,12 +45,12 @@ function debounce(fn, delay) {
   };
 };
 
-function showFloatingText(timeout) {
+function showFloatingText(timeout, copy_message) {
   removeElementByID('floating-text');
   var floatingDiv = document.createElement('div');
   floatingDiv.id = "floatingText";
   floatingDiv.className = "floatingText";
-  floatingDiv.textContent = "Copied!";
+  floatingDiv.textContent = copy_message;
 
   // Apply CSS using J
   floatingDiv.style.direction = "ltr";
@@ -127,11 +127,13 @@ function showPopup(rect, highlighted_text) {
       "reduced"
     );
     popup_element.appendChild(addPASRadioOptions(highlighted_text, script_type));
+    copy_message = "Hat kopîkirin!";
   } else if (script_type === "LAS") {
     // Transliterated text will appear using Persian-Arabic script, therefore rtl.
     popup_element.style.direction = "rtl";
     popup_element.style.textAlign = "right";
     popup_element.appendChild(addLASRadioOptions(highlighted_text, script_type));
+    copy_message = "!کۆپی کراوە";
     // Convert the highlighted text based on the detected script
     transliterated_text = transliterate(highlighted_text,
       script_type,
@@ -172,7 +174,7 @@ function showPopup(rect, highlighted_text) {
     navigator.clipboard.writeText(
       tratransliterated_text_element.innerText
     ).then(function () {
-      showFloatingText(2000);
+      showFloatingText(2000, copy_message);
     }).catch(function (error) {
       console.error('Failed to copy seelcted text: ', error);
     });
